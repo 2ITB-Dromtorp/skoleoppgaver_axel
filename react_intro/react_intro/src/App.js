@@ -21,7 +21,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         
-        <h1> React Intro </h1>
+        <h1> React 1ntro </h1>
         {content}
 
       </header>
