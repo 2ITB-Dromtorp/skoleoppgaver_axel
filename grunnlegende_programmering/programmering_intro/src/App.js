@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import Steinsakspapir from './Steinsakspapir';
+import Confetti from './Confetti';
 import Piler from './Piler';
 import Klokke from './Klokke';
 import Oppgave4 from './Oppgave4';
@@ -17,6 +19,8 @@ function App() {
         <Oppgave4 />
         <Klokke />
         <Piler />
+        <Confetti />
+        <Steinsakspapir />
       </header>
     </div>
   );
