@@ -162,6 +162,9 @@ h1 {
   border-radius: 10px;
   text-align: center;
   box-shadow: 0px 9px 33px rgba(0, 0, 0, 1); /* Heavy shadow */
+  width: 700px; 
+  position: relative;
+
 }
 
 /* Ensure button styles match the others */
@@ -174,3 +177,40 @@ h1 {
   cursor: pointer;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);
 }
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.close-icon {
+  width: 40px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  border-radius: 90%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);}
+
+  .login-prompt {
+    text-align: center;
+  }
+  
+  .login-prompt h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .login-prompt label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .login-prompt input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+  }
+  
