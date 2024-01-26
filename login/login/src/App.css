@@ -1,38 +1,61 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Login.css */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: url('./background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.login-container {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  text-align: center; /* Center-align the text in the container */
+  color: #ffffff; /* Set text color to white */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-form {
+  padding: 20px;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #ffffff;
+}
+
+.login-form input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1.4px solid #ffffff; /* White border around the input fields */
+  border-radius: 15px; /* Make the input fields rounder */
+  background: rgba(0, 0, 0, 0.1); /* Adjusted transparency */
+  backdrop-filter: blur(1px); /* Same blur as the container */
+  width: 100%;
+  color: #ffffff; /* Set text color to white */
+}
+
+.login-form button {
+  background-color: #ffffff;
+  color: #000000;
+  cursor: pointer;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 17px;
+  width: 100%;
+}
+
+/* Additional styles for a nice layout */
+.login-form h1 {
+  margin-bottom: 20px;
+}
+
+.login-form div {
+  margin-bottom: 15px;
 }
