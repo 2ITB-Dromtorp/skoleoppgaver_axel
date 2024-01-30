@@ -17,13 +17,33 @@ export default function Login() {
       <h1>Login</h1>
 
       <form className="login-form" onSubmit={handleSubmit}>
-        <label>Username:</label>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Email"
+        />
 
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+
+        <div className="additional-options">
+          <div className="remember-me">
+            <input type="checkbox" />
+            <label>Remember me</label>
+          </div>
+          <a href="#" className="forgot-password">Forgot password?</a>
+        </div>
 
         <button type="submit">Log in</button>
+
+        <div className="register-link">
+          Don't have an account? <a href="#">Register</a>
+        </div>
       </form>
     </div>
   );

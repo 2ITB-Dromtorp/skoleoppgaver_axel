@@ -11,17 +11,18 @@ body {
 }
 
 .login-container {
+  height: 570px; /* Set the desired height */
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 1);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   text-align: center; /* Center-align the text in the container */
   color: #ffffff; /* Set text color to white */
 }
 
 .login-form {
-  padding: 20px;
+  padding: 5px;
 }
 
 .login-form label {
@@ -32,12 +33,12 @@ body {
 
 .login-form input {
   margin-bottom: 10px;
-  padding: 8px;
-  border: 1.4px solid #ffffff; /* White border around the input fields */
-  border-radius: 15px; /* Make the input fields rounder */
-  background: rgba(0, 0, 0, 0.1); /* Adjusted transparency */
+  padding: 12px;
+  border: 1px solid #ffffff; /* White border around the input fields */
+  border-radius: 125px; /* Make the input fields rounder */
+  background: rgba(0, 0, 0, 0.0); /* Adjusted transparency */
   backdrop-filter: blur(1px); /* Same blur as the container */
-  width: 100%;
+  width: 80%;
   color: #ffffff; /* Set text color to white */
 }
 
@@ -45,10 +46,10 @@ body {
   background-color: #ffffff;
   color: #000000;
   cursor: pointer;
-  padding: 10px 15px;
+  padding: 12px 1px;
   border: none;
-  border-radius: 17px;
-  width: 100%;
+  border-radius: 147px;
+  width: 87%;
 }
 
 /* Additional styles for a nice layout */
@@ -58,4 +59,46 @@ body {
 
 .login-form div {
   margin-bottom: 15px;
+}
+
+/* ... (previous styles) ... */
+
+/* ... (previous styles) ... */
+
+.additional-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+}
+
+.remember-me input {
+  margin-right: 5px; /* Add some space between the checkbox and the label */
+}
+
+.remember-me label {
+  margin-bottom: 0; /* Adjust margin to fix the alignment */
+  margin-left: 5px;
+  color: #ffffff;
+}
+
+.forgot-password {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.register-link { 
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.register-link a {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
 }
