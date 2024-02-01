@@ -7,7 +7,7 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static("build"))
 
-app.get('/', (req, res) => {
+app.get('/quiz', (req, res) => {
   res.send('Hello World!')
 })
 
