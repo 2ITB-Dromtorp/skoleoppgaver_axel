@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Confetti from "react-dom-confetti";
+import ConfettiExplosion from "react-confetti-explosion";
 import "./App.css";
 
 const questions = [
@@ -48,7 +48,7 @@ export default function Quiz() {
   const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
-    if (score === 0) {
+    if (score === 6) {
       setShowConfetti(true);
     }
   }, [score]);
@@ -92,57 +92,45 @@ export default function Quiz() {
     setShowConfetti(false);
   };
 
-  const confettiConfig = {
-    angle: 40,
-    spread: 100,
-    startVelocity: 5,
-    elementCount: 500,
-    dragFriction: 0.03,
-    duration: 2880,
-    stagger: 0,
-    width: "14px",
-    height: "6px",
-    perspective: "1400px",
-    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
-  };
-
   return (
     <div className="quiz-container">
       <h1>Quiz</h1>
 
-      <Confetti active={showConfetti} config={confettiConfig} />
+      {showConfetti && <ConfettiExplosion />}
 
-      {currentQuestion < questions.length ? (
-        <div className="quiz-form">
-          <h2>{questions[currentQuestion].question}</h2>
+      <div className="quiz-content">
+        {currentQuestion < questions.length ? (
+          <div className="quiz-form">
+            <h2>{questions[currentQuestion].question}</h2>
 
-          <div className="options">
-            {questions[currentQuestion].options.map((option, index) => (
-              <div key={index}>
-                <input
-                  type={Array.isArray(questions[currentQuestion].correctAnswer) ? "checkbox" : "radio"}
-                  id={option}
-                  name="answer"
-                  value={option}
-                  checked={selectedAnswers.includes(option)}
-                  onChange={() => handleAnswerSelect(option)}
-                />
-                <label htmlFor={option}>{option}</label>
-              </div>
-            ))}
+            <div className="options">
+              {questions[currentQuestion].options.map((option, index) => (
+                <div key={index}>
+                  <input
+                    type={Array.isArray(questions[currentQuestion].correctAnswer) ? "checkbox" : "radio"}
+                    id={option}
+                    name="answer"
+                    value={option}
+                    checked={selectedAnswers.includes(option)}
+                    onChange={() => handleAnswerSelect(option)}
+                  />
+                  <label htmlFor={option}>{option}</label>
+                </div>
+              ))}
+            </div>
+
+            <button onClick={handleNextQuestion}>
+              {currentQuestion === questions.length - 1 ? "Fullfør" : "Neste"}
+            </button>
           </div>
-
-          <button onClick={handleNextQuestion}>
-            {currentQuestion === questions.length - 1 ? "Fullfør" : "Neste"}
-          </button>
-        </div>
-      ) : (
-        <div className="quiz-result">
-          <h2>Quiz fullført!</h2>
-          <p>Din poengsum: {score} av {questions.length}</p>
-          <button onClick={handleTryAgain}>Prøv igjen</button>
-        </div>
-      )}
+        ) : (
+          <div className="quiz-result">
+            <h2>Quiz fullført!</h2>
+            <p>Din poengsum: {score} av {questions.length}</p>
+            <button onClick={handleTryAgain}>Prøv igjen</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
