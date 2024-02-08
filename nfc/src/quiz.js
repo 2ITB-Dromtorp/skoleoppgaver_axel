@@ -1,51 +1,116 @@
-// quiz.js
-import React, { useState } from "react";
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Confetti from "react-dom-confetti";
+import "./App.css";
 
 const questions = [
   {
     id: 1,
-    question: "What is the capital of France?",
-    options: ["Berlin", "Madrid", "Paris", "Rome"],
-    correctAnswer: "Paris"
+    question: "Hva står HTML for?",
+    options: ["Hyper Text Markup Language", "High-level Text Modeling Language", "Hyper Transfer Markup Language", "Home Tool Markup Language"],
+    correctAnswer: "Hyper Text Markup Language"
   },
   {
     id: 2,
-    question: "Which planet is known as the Red Planet?",
-    options: ["Earth", "Mars", "Venus", "Jupiter"],
-    correctAnswer: "Mars"
+    question: "Hva er et JavaScript-rammeverk for å bygge brukergrensesnitt?",
+    options: ["Angular", "React", "Vue", "Ember"],
+    correctAnswer: "React"
   },
   {
     id: 3,
-    question: "What is the largest mammal?",
-    options: ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
-    correctAnswer: "Blue Whale"
+    question: "Hvilken av følgende er et operativsystem?",
+    options: ["Microsoft Word", "Linux", "Photoshop", "Microsoft Excel"],
+    correctAnswer: "Linux"
+  },
+  {
+    id: 4,
+    question: "Hva er de viktigste egenskapene til en god CSS-stil?",
+    options: ["Fleksibilitet", "Lesbarhet", "Gjenbrukbarhet", "Skalerbarhet"],
+    correctAnswer: ["Lesbarhet", "Gjenbrukbarhet"]
+  },
+  {
+    id: 5,
+    question: "Hvilke av følgende er front-end programmeringsspråk?",
+    options: ["Java", "Python", "JavaScript", "C++"],
+    correctAnswer: ["JavaScript"]
+  },
+  {
+    id: 6,
+    question: "Hva er fordelene med å bruke versjonskontrollsystemer som Git?",
+    options: ["Sporing av endringer", "Samarbeid mellom utviklere", "Sikkerhetskopi", "Versjonshistorikk"],
+    correctAnswer: ["Sporing av endringer", "Samarbeid mellom utviklere", "Versjonshistorikk"]
   },
 ];
 
 export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [score, setScore] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  useEffect(() => {
+    if (score === 0) {
+      setShowConfetti(true);
+    }
+  }, [score]);
 
   const handleAnswerSelect = (answer) => {
-    setSelectedAnswer(answer);
+    const newSelectedAnswers = [...selectedAnswers];
+    const answerIndex = newSelectedAnswers.indexOf(answer);
+
+    if (answerIndex === -1) {
+      newSelectedAnswers.push(answer);
+    } else {
+      newSelectedAnswers.splice(answerIndex, 1);
+    }
+
+    setSelectedAnswers(newSelectedAnswers);
   };
 
   const handleNextQuestion = () => {
-    // Check if the selected answer is correct
-    if (selectedAnswer === questions[currentQuestion].correctAnswer) {
+    const correctAnswers = questions[currentQuestion].correctAnswer;
+    let isCorrect = false;
+    
+    if (Array.isArray(correctAnswers)) {
+      isCorrect = selectedAnswers.length === correctAnswers.length &&
+        selectedAnswers.every(answer => correctAnswers.includes(answer));
+    } else {
+      isCorrect = selectedAnswers.length === 1 && selectedAnswers[0] === correctAnswers;
+    }
+
+    if (isCorrect) {
       setScore(score + 1);
     }
 
-    // Move to the next question
     setCurrentQuestion(currentQuestion + 1);
-    setSelectedAnswer(null);
+    setSelectedAnswers([]);
+  };
+
+  const handleTryAgain = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswers([]);
+    setScore(0);
+    setShowConfetti(false);
+  };
+
+  const confettiConfig = {
+    angle: 40,
+    spread: 100,
+    startVelocity: 5,
+    elementCount: 500,
+    dragFriction: 0.03,
+    duration: 2880,
+    stagger: 0,
+    width: "14px",
+    height: "6px",
+    perspective: "1400px",
+    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
   };
 
   return (
     <div className="quiz-container">
       <h1>Quiz</h1>
+
+      <Confetti active={showConfetti} config={confettiConfig} />
 
       {currentQuestion < questions.length ? (
         <div className="quiz-form">
@@ -55,11 +120,11 @@ export default function Quiz() {
             {questions[currentQuestion].options.map((option, index) => (
               <div key={index}>
                 <input
-                  type="radio"
+                  type={Array.isArray(questions[currentQuestion].correctAnswer) ? "checkbox" : "radio"}
                   id={option}
                   name="answer"
                   value={option}
-                  checked={selectedAnswer === option}
+                  checked={selectedAnswers.includes(option)}
                   onChange={() => handleAnswerSelect(option)}
                 />
                 <label htmlFor={option}>{option}</label>
@@ -67,12 +132,15 @@ export default function Quiz() {
             ))}
           </div>
 
-          <button onClick={handleNextQuestion}>Next</button>
+          <button onClick={handleNextQuestion}>
+            {currentQuestion === questions.length - 1 ? "Fullfør" : "Neste"}
+          </button>
         </div>
       ) : (
         <div className="quiz-result">
-          <h2>Quiz Completed!</h2>
-          <p>Your Score: {score} out of {questions.length}</p>
+          <h2>Quiz fullført!</h2>
+          <p>Din poengsum: {score} av {questions.length}</p>
+          <button onClick={handleTryAgain}>Prøv igjen</button>
         </div>
       )}
     </div>

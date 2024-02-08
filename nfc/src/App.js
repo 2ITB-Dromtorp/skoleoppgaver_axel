@@ -1,17 +1,12 @@
 // App.js
 import './App.css';
-import Quiz from './quiz';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Quiz from './quiz'; // Assuming you have a Quiz component
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Router>
-          <Switch>
-            <Route path="/" component={Quiz} />
-          </Switch>
-        </Router>
+        <Quiz />
       </header>
     </div>
   );
