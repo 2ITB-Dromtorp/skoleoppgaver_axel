@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import ConfettiExplosion from "react-confetti-explosion";
+import React, { useState } from "react";
 import "./App.css";
 
 const questions = [
@@ -45,13 +44,6 @@ export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [score, setScore] = useState(0);
-  const [showConfetti, setShowConfetti] = useState(false);
-
-  useEffect(() => {
-    if (score === 6) {
-      setShowConfetti(true);
-    }
-  }, [score]);
 
   const handleAnswerSelect = (answer) => {
     const newSelectedAnswers = [...selectedAnswers];
@@ -89,14 +81,11 @@ export default function Quiz() {
     setCurrentQuestion(0);
     setSelectedAnswers([]);
     setScore(0);
-    setShowConfetti(false);
   };
 
   return (
     <div className="quiz-container">
       <h1>Quiz</h1>
-
-      {showConfetti && <ConfettiExplosion />}
 
       <div className="quiz-content">
         {currentQuestion < questions.length ? (
