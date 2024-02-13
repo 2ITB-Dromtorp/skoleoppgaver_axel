@@ -11,9 +11,8 @@ body {
 }
 
 .quiz-container {
-  max-width: 800px;
-  width: 297px;
-  height: 821px;
+  min-width: 180px;
+  min-height: 181px;
   margin: 0 auto;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 1);
@@ -21,7 +20,7 @@ body {
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   text-align: center;
-  color: #ffffff;
+  color: #fffffd;
 }
 
 .quiz-form {
@@ -97,3 +96,4 @@ button {
   width: 87%;
   margin-top: 15px;
 }
+
