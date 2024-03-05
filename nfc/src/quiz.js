@@ -6,10 +6,9 @@ export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [score, setScore] = useState(0);
-  let port = process.env.PORT
 
   useEffect(() => {
-    fetch("http://localhost:" + port +"/quiz")
+    fetch("/quiz")
       .then(response => response.json())
       .then(data => setQuestions(data))
       .catch(error => console.error("Error fetching quiz questions:", error));
