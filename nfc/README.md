@@ -30,4 +30,4 @@ To further develop this project, you can:
 This project was developed by Axel Sandbakken
 
 ## License
-This project is licensed under the [MIT License](LICENSE). See [LICENSE](LICENSE) for details.
+This project is licensed under the [MIT License](LICENSE.md). See [LICENSE](LICENSE.md) for details.
