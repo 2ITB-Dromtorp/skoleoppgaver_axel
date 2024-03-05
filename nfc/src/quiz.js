@@ -46,6 +46,12 @@ export default function Quiz() {
     setSelectedAnswers([]);
   };
 
+  const handlePreviousQuestion = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+    }
+  };
+
   const handleTryAgain = () => {
     setCurrentQuestion(0);
     setSelectedAnswers([]);
@@ -77,9 +83,19 @@ export default function Quiz() {
               ))}
             </div>
 
-            <button onClick={handleNextQuestion}>
-              {currentQuestion === questions.length - 1 ? "Fullfør" : "Neste"}
-            </button>
+            <div className="quiz-progress">
+              Spørsmål {currentQuestion + 1} av {questions.length}
+            </div>
+
+            <div className="navigation-buttons">
+  {currentQuestion > 0 && (
+    <button onClick={handlePreviousQuestion}>Tilbake</button>
+  )}
+  <button onClick={handleNextQuestion}>
+    {currentQuestion === questions.length - 1 ? "Fullfør" : "Neste"}
+  </button>
+</div>
+
           </div>
         ) : (
           <div className="quiz-result">
