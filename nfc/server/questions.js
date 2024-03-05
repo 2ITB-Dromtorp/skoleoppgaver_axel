@@ -1,7 +1,7 @@
 const questions = [
     {
       id: 1,
-      question: "1Hva står HTML for?",
+      question: "Hva står HTML for?",
       options: ["Hyper Text Markup Language", "High-level Text Modeling Language", "Hyper Transfer Markup Language", "Home Tool Markup Language"],
       correctAnswer: "Hyper Text Markup Language"
     },
