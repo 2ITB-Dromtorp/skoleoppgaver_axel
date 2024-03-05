@@ -92,27 +92,3 @@ button {
   width: 87%;
   margin-top: 15px;
 }
-
-.quiz-progress {
-  margin-bottom: 20px;
-  color: #ffffff;
-}
-
-.navigation-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.navigation-buttons button {
-  background-color: #ffffff;
-  color: #000000;
-  cursor: pointer;
-  padding: 12px 1px;
-  border: none;
-  border-radius: 147px;
-  width: 45%;
-}
-
-.navigation-buttons button:hover {
-  background-color: #ddd;
-}

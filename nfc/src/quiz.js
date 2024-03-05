@@ -6,9 +6,10 @@ export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [score, setScore] = useState(0);
+  let port = process.env.PORT
 
   useEffect(() => {
-    fetch("http://localhost:8080/quiz")
+    fetch("http://localhost:" + port +"/quiz")
       .then(response => response.json())
       .then(data => setQuestions(data))
       .catch(error => console.error("Error fetching quiz questions:", error));
@@ -46,12 +47,6 @@ export default function Quiz() {
     setSelectedAnswers([]);
   };
 
-  const handlePreviousQuestion = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-    }
-  };
-
   const handleTryAgain = () => {
     setCurrentQuestion(0);
     setSelectedAnswers([]);
@@ -83,18 +78,9 @@ export default function Quiz() {
               ))}
             </div>
 
-            <div className="quiz-progress">
-              Spørsmål {currentQuestion + 1} av {questions.length}
-            </div>
-
-            <div className="navigation-buttons">
-              <button onClick={handleNextQuestion}>
-                {currentQuestion === questions.length - 1 ? "Fullfør" : "Neste"}
-              </button>
-              {currentQuestion > 0 && (
-                <button onClick={handlePreviousQuestion}>Tilbake</button>
-              )}
-            </div>
+            <button onClick={handleNextQuestion}>
+              {currentQuestion === questions.length - 1 ? "Fullfør" : "Neste"}
+            </button>
           </div>
         ) : (
           <div className="quiz-result">
