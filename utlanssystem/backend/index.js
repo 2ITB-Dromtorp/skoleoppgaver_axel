@@ -1,4 +1,4 @@
-// app.js (backend)
+// backend/index.js
 const express = require('express');
 const app = express();
 const port = 3500;
@@ -27,7 +27,7 @@ connection.connect(function (err) {
 });
 
 app.get('/', (request, response) => {
-  connection.query('SELECT * FROM elev', function (error, results, fields) {
+  connection.query('SELECT * FROM users', function (error, results, fields) {
     if (error) {
       console.error('Error executing query:', error);
       response.status(500).json({ error: 'Internal Server Error' });
@@ -40,9 +40,9 @@ app.get('/', (request, response) => {
 
 // Modify login route handler to use bcrypt
 app.post('/login', (request, response) => {
-  let { username, password } = request.body;
+  let { brukernavn, passord } = request.body;
 
-  connection.query('SELECT * FROM users WHERE username = ?', [username], async function (error, results, fields) {
+  connection.query('SELECT * FROM users WHERE brukernavn = ?', [brukernavn], async function (error, results, fields) {
     if (error) {
       console.error('Error executing query:', error);
       response.status(500).json({ error: 'Internal Server Error' });
@@ -55,10 +55,10 @@ app.post('/login', (request, response) => {
     }
 
     const user = results[0];
-    const hashedPassword = user.password;
+    const hashedPassword = user.passord;
 
     try {
-      const match = await bcrypt.compare(password, hashedPassword);
+      const match = await bcrypt.compare(passord, hashedPassword);
       if (match) {
         // Passwords match, login successful
         response.status(200).json({ message: 'Login successful' });
@@ -75,13 +75,13 @@ app.post('/login', (request, response) => {
 
 // Modify registration route handler to use bcrypt
 app.post('/register', async (request, response) => {
-  let { username, password, isAdmin, elevID } = request.body;
+  let { brukernavn, passord, admin, userid } = request.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+    const hashedPassword = await bcrypt.hash(passord, 10); // 10 is the salt rounds
 
     // Insert the user into the database with the hashed password
-    connection.query('INSERT INTO users (username, password, isAdmin, elevID) VALUES (?, ?, ?, ?)', [username, hashedPassword, isAdmin, elevID], function (error, results, fields) {
+    connection.query('INSERT INTO users (brukernavn, passord, admin, userid) VALUES (?, ?, ?, ?)', [brukernavn, hashedPassword, admin, userid], function (error, results, fields) {
       if (error) {
         console.error('Error executing query:', error);
         response.status(500).json({ error: 'Internal Server Error' });

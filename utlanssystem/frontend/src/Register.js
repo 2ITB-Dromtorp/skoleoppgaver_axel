@@ -2,42 +2,42 @@
 import React, { useState } from 'react';
 
 const Register = ({ onRegister }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [elevID, setElevID] = useState('');
+  const [brukernavn, setBrukernavn] = useState('');
+  const [passord, setPassord] = useState('');
+  const [admin, setAdmin] = useState(false);
+  const [userid, setUserid] = useState('');
 
   const handleRegister = () => {
     // Perform registration logic
-    onRegister(username, password, isAdmin, elevID);
+    onRegister(brukernavn, passord, admin, userid);
   };
 
   return (
     <div>
-      <h2>Register</h2>
+      <h2>Registrer</h2>
       <input
         type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Brukernavn"
+        value={brukernavn}
+        onChange={(e) => setBrukernavn(e.target.value)}
       />
       <input
         type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Passord"
+        value={passord}
+        onChange={(e) => setPassord(e.target.value)}
       />
       <input
         type="checkbox"
-        checked={isAdmin}
-        onChange={(e) => setIsAdmin(e.target.checked)}
+        checked={admin}
+        onChange={(e) => setAdmin(e.target.checked)}
       />
       <label>Admin</label>
       <input
         type="text"
-        placeholder="ElevID"
-        value={elevID}
-        onChange={(e) => setElevID(e.target.value)}
+        placeholder="User ID"
+        value={userid}
+        onChange={(e) => setUserid(e.target.value)}
       />
       <button onClick={handleRegister}>Register</button>
     </div>

@@ -22,7 +22,7 @@ function App() {
     }
   };
 
-  const handleLogin = async (username, password) => {
+  const handleLogin = async (brukernavn, passord) => {
     try {
       const response = await fetch('http://localhost:3500/login', {
         method: 'POST',
@@ -30,8 +30,8 @@ function App() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: username,
-          password: password
+          brukernavn: brukernavn,
+          passord: passord
         })
       });
       const data = await response.json();
@@ -42,7 +42,7 @@ function App() {
     }
   };
 
-  const handleRegister = async (username, password, isAdmin, elevID) => {
+  const handleRegister = async (brukernavn, passord, admin, userid) => {
     try {
       const response = await fetch('http://localhost:3500/register', {
         method: 'POST',
@@ -50,10 +50,10 @@ function App() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: username,
-          password: password,
-          isAdmin: isAdmin,
-          elevID: elevID
+          brukernavn: brukernavn,
+          passord: passord,
+          admin: admin,
+          userid: userid
         })
       });
       const data = await response.json();
