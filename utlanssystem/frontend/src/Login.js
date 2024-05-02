@@ -1,12 +1,12 @@
 // Login.js
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link component from react-router-dom
 
 const Login = ({ onLogin }) => {
   const [brukernavn, setBrukernavn] = useState('');
   const [passord, setPassord] = useState('');
 
   const handleLogin = () => {
-    // Perform login logic
     onLogin(brukernavn, passord);
   };
 
@@ -26,6 +26,9 @@ const Login = ({ onLogin }) => {
         onChange={(e) => setPassord(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
+      <p>
+        Don't have an account? <Link to="/register">Register</Link> {/* Link to the register page */}
+      </p>
     </div>
   );
 };

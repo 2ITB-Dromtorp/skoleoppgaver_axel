@@ -1,30 +1,18 @@
-// App.js
-import React, { useState, useEffect } from 'react';
+import './App.css';
+import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
+import Equipment from './Equipment';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
-  const [data, setData] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch('http://localhost:3500');
-      const jsonData = await response.json();
-      setData(jsonData);
-      console.log(jsonData)
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  const [fullName, setFullName] = useState('');
+  const [userID, setUserID] = useState('');
 
   const handleLogin = async (brukernavn, passord) => {
     try {
-      const response = await fetch('http://localhost:3500/login', {
+      const response = await fetch('http://192.168.0.3:3500/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -35,46 +23,30 @@ function App() {
         })
       });
       const data = await response.json();
-      console.log(data);
-      setIsLoggedIn(true);
+      if (data.isLoggedIn) {
+        setIsLoggedIn(true);
+        setFullName(data.fullName);
+        setUserID(data.userid); // Assuming the backend sends userID on login
+      } else {
+        alert(data.error);
+      }
     } catch (error) {
       console.error('Error logging in:', error);
     }
   };
 
-  const handleRegister = async (brukernavn, passord, admin, userid) => {
-    try {
-      const response = await fetch('http://localhost:3500/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          brukernavn: brukernavn,
-          passord: passord,
-          admin: admin,
-          userid: userid
-        })
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('Error registering:', error);
-    }
-  };
-
   return (
-    <div>
-      <h1>Data from MySQL Database</h1>
-      <ul>
-        {data.length > 0 && data.map((item, index) => (
-          <li key={index}>{item.Fornavn} - {item.Etternavn}</li>
-        ))}
-      </ul>
-
-      {!isLoggedIn && <Login onLogin={handleLogin} />}
-      {!isLoggedIn && <Register onRegister={handleRegister} />}
-    </div>
+    <Router>
+      <div>
+        <h1>Viken utlån</h1>
+        <Routes>
+          <Route path="/" element={<Navigate replace to="/login" />} />
+          <Route path="/login" element={!isLoggedIn ? <Login onLogin={handleLogin} /> : <Navigate replace to="/equipment" />} />
+          <Route path="/register" element={!isLoggedIn ? <Register onRegister={handleLogin} /> : <Navigate replace to="/equipment" />} />
+          <Route path="/equipment" element={isLoggedIn ? <Equipment fullName={fullName} userID={userID} /> : <Navigate replace to="/login" />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

@@ -39,61 +39,91 @@ app.get('/', (request, response) => {
 });
 
 // Modify login route handler to use bcrypt
-app.post('/login', (request, response) => {
-  let { brukernavn, passord } = request.body;
-
-  connection.query('SELECT * FROM users WHERE brukernavn = ?', [brukernavn], async function (error, results, fields) {
+// New route to fetch equipment data
+app.get('/equipment', (request, response) => {
+  connection.query('SELECT * FROM utstyr', function (error, results) {
     if (error) {
-      console.error('Error executing query:', error);
+      console.error('Error fetching equipment data:', error);
       response.status(500).json({ error: 'Internal Server Error' });
       return;
     }
+    response.json(results);
+  });
+});
 
+// POST /borrow - endpoint to handle borrowing an item
+app.post('/borrow', (request, response) => {
+  const { elevID, utstyrsID } = request.body;
+  const today = new Date().toISOString().slice(0, 10);
+
+  const sql = 'INSERT INTO utlan (utstyrsID, elevID, Dato) VALUES (?, ?, ?)';
+  connection.query(sql, [utstyrsID, elevID, today], (err, result) => {
+      if (err) {
+          console.error('Failed to create borrowing record:', err);
+          return response.status(500).json({ error: 'Internal Server Error', details: err.message });
+      }
+      response.status(201).json({ message: 'Borrowing recorded successfully', utlanID: result.insertId });
+  });
+});
+
+
+
+app.post('/login', (request, response) => {
+  let { brukernavn, passord } = request.body;
+  connection.query('SELECT * FROM users WHERE brukernavn = ?', [brukernavn], async function (error, results) {
+    if (error) {
+      response.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
     if (results.length === 0) {
       response.status(401).json({ error: 'Invalid username or password' });
       return;
     }
-
     const user = results[0];
     const hashedPassword = user.passord;
-
-    try {
-      const match = await bcrypt.compare(passord, hashedPassword);
-      if (match) {
-        // Passwords match, login successful
-        response.status(200).json({ message: 'Login successful' });
-      } else {
-        // Passwords don't match
-        response.status(401).json({ error: 'Invalid username or password' });
-      }
-    } catch (error) {
-      console.error('Error comparing passwords:', error);
-      response.status(500).json({ error: 'Internal Server Error' });
+    const match = await bcrypt.compare(passord, hashedPassword);
+    if (match) {
+      // Fetch full name from the table where names are stored
+      connection.query('SELECT Fornavn, Etternavn FROM elev WHERE menneskeID = ?', [user.userid], function (err, nameResults) {
+        if (err || nameResults.length === 0) {
+          response.status(500).json({ message: 'Failed to retrieve user information', isLoggedIn: false });
+        } else {
+          const fullName = nameResults[0].Fornavn + ' ' + nameResults[0].Etternavn;
+          response.status(200).json({ message: 'Login successful', isLoggedIn: true, fullName: fullName });
+        }
+      });
+    } else {
+      response.status(401).json({ error: 'Invalid username or password' });
     }
   });
 });
 
-// Modify registration route handler to use bcrypt
+
+
+
 app.post('/register', async (request, response) => {
-  let { brukernavn, passord, admin, userid } = request.body;
+  let { brukernavn, passord, userid } = request.body;  // Removed 'admin' from destructuring
 
   try {
     const hashedPassword = await bcrypt.hash(passord, 10); // 10 is the salt rounds
 
-    // Insert the user into the database with the hashed password
-    connection.query('INSERT INTO users (brukernavn, passord, admin, userid) VALUES (?, ?, ?, ?)', [brukernavn, hashedPassword, admin, userid], function (error, results, fields) {
-      if (error) {
-        console.error('Error executing query:', error);
-        response.status(500).json({ error: 'Internal Server Error' });
-        return;
-      }
-      response.status(200).json({ message: 'User registered successfully' });
+    // Automatically set 'admin' to 0 during insertion
+    connection.query('INSERT INTO users (brukernavn, passord, admin, userid) VALUES (?, ?, 0, ?)', 
+      [brukernavn, hashedPassword, userid], function (error, results, fields) {
+        if (error) {
+          console.error('Error executing query:', error);
+          response.status(500).json({ error: 'Internal Server Error', details: error.sqlMessage });
+          return;
+        }
+        response.status(200).json({ message: 'User registered successfully' });
     });
   } catch (error) {
     console.error('Error hashing password:', error);
-    response.status(500).json({ error: 'Internal Server Error' });
+    response.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
 });
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
