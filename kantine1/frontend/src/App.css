@@ -1,0 +1,96 @@
+.App {
+  text-align: center;
+}
+
+/* Add this to your main CSS file */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: green;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+/* General Styling */
+.container {
+  max-width: 600px; /* Maximum width of form for readability */
+  margin: 20px auto; /* Centering the form horizontally */
+  padding: 20px; /* Padding around the content */
+  background-color: #fff; /* White background to offset from page background */
+  border-radius: 8px; /* Rounded corners for the form container */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Soft shadow for depth */
+}
+
+/* Input Field Styling */
+input[type='text'],
+input[type='number'],
+input[type='email'],
+input[type='password'],
+input[type='date'],
+input[type='tel'] { /* Including telephone type for card numbers */
+  width: 100%; /* Adjusted width */
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+input[type='text']:focus,
+input[type='number']:focus,
+input[type='email']:focus,
+input[type='password']:focus,
+input[type='date']:focus,
+input[type='tel']:focus { /* Focus styles */
+  border-color: #6658d3;
+  box-shadow: 0 0 8px rgba(102, 88, 211, 0.2);
+}
+
+/* Specific styles for card number input */
+input[name='cardNumber'] {
+  width: 100%; /* Full width within its container */
+  text-align: left;
+}
+
+/* Styling for Expiration Date input */
+input[name='expDate'] {
+  width: 50%; /* Smaller width for date */
+  text-align: center;
+}
+
+/* CVC Input */
+input[name='cvc'] {
+  width: 30%; /* Smaller field for CVC */
+  text-align: center;
+}
+
+/* Adjust label alignment and font weight */
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold; /* Make labels bold */
+}
+
+/* Button Styling */
+button {
+  font-size: 16px;
+  padding: 12px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+button:hover,
+button:focus {
+  background-color: #45a049;
+}
